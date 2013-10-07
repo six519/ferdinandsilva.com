@@ -9,9 +9,33 @@ def interface_index(request):
     gists = []
 
     try:
-    	gists = requests.get('https://api.github.com/users/six519/gists').json()
+        gists = requests.get('https://api.github.com/users/six519/gists').json()
     except:
-    	pass
+        pass
+
+    info['gists'] = gists
+
+    return render_to_response('interface/index.html',info,RequestContext(request))
+
+def interface_view(request, id):
+    info = {}
+    gists = []
+    exists = False
+
+    try:
+        gists = requests.get('https://api.github.com/users/six519/gists').json()
+
+        for gist in gists:
+            if str(gist['id']) == str(id):
+                 gists = [gist]
+                 exists = True
+                 break
+
+    except:
+        pass
+
+    if not exists:
+        return redirect('interface_index')
 
     info['gists'] = gists
 
