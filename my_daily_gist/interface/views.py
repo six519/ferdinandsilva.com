@@ -38,5 +38,6 @@ def interface_view(request, id):
         return redirect('interface_index')
 
     info['gists'] = gists
+    info['site_title'] = gists[0]['description']
 
     return render_to_response('interface/index.html',info,RequestContext(request))
