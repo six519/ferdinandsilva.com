@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse, redirect, render_to_response, render
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 import requests
+import hashlib
 
 def interface_index(request):
     info = {}
@@ -41,3 +42,16 @@ def interface_view(request, id):
     info['site_title'] = gists[0]['description']
 
     return render_to_response('interface/index.html',info,RequestContext(request))
+
+def sha1_view(request):
+
+    sha1 = hashlib.sha1()
+    txt = request.GET.get('txt','')
+    ret = ""
+
+    if txt != "":
+        sha1.update(txt)
+        ret = str(sha1.hexdigest())
+
+    return HttpResponse(ret)
+
