@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 import requests
 import hashlib
+import json
 
 def interface_index(request):
     info = {}
@@ -54,4 +55,34 @@ def sha1_view(request):
         ret = str(sha1.hexdigest())
 
     return HttpResponse(ret)
+
+def json_test(request):
+
+    ret = [
+        {
+            "id":"1",
+            "longitude":"13.939",
+            "latitude":"121.155",
+            "description":"This is where i am living",
+            "name":"My House"
+        },
+        {
+            "id":"2",
+            "longitude":"13.938",
+            "latitude":"121.153",
+            "description":"Gasoline station on our street",
+            "name":"Phoenix"
+        },
+        {
+            "id":"3",
+            "longitude":"13.938",
+            "latitude":"121.154",
+            "description":"Kaberks house",
+            "name":"Regie"
+        }
+    ]
+
+    return HttpResponse(json.dumps(ret), content_type="application/json")
+
+
 
