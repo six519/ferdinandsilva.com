@@ -61,22 +61,22 @@ def json_test(request):
     ret = [
         {
             "id":"1",
-            "longitude":"13.939",
-            "latitude":"121.155",
+            "longitude":"13.939115",
+            "latitude":"121.155161",
             "description":"This is where i am living",
             "name":"My House"
         },
         {
             "id":"2",
-            "longitude":"13.938",
-            "latitude":"121.153",
+            "longitude":"13.938758",
+            "latitude":"121.153868",
             "description":"Gasoline station on our street",
             "name":"Phoenix"
         },
         {
             "id":"3",
-            "longitude":"13.938",
-            "latitude":"121.154",
+            "longitude":"13.938053",
+            "latitude":"121.154968",
             "description":"Kaberks house",
             "name":"Regie"
         }
