@@ -82,7 +82,11 @@ def json_test(request):
         }
     ]
 
-    return HttpResponse(json.dumps(ret), content_type="application/json")
+    res = HttpResponse(json.dumps(ret), content_type="application/json")
+
+    res['Access-Control-Allow-Origin'] = '*'
+
+    return res
 
 
 
