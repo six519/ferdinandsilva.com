@@ -168,7 +168,7 @@ LOGGING = {
     }
 }
 
-MY_DAILY_GIST_PER_PAGE = 5
+MY_DAILY_GIST_PER_PAGE = 4
 
 try:
     from localsettings import *
