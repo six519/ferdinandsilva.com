@@ -2,6 +2,7 @@ from django.conf import settings
 from django.shortcuts import HttpResponse, redirect, render_to_response, render
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import requests
 import hashlib
 import json
@@ -15,7 +16,18 @@ def interface_index(request):
     except:
         pass
 
+    paginator = Paginator(gists, settings.MY_DAILY_GIST_PER_PAGE)
+    page = request.GET.get('page','')
+
+    try:
+        gists = paginator.page(page)
+    except PageNotAnInteger:
+        gists = paginator.page(1)
+    except EmptyPage:
+        gists = paginator.page(paginator.num_pages)
+
     info['gists'] = gists
+    info['with_page'] = True
 
     return render_to_response('interface/index.html',info,RequestContext(request))
 
