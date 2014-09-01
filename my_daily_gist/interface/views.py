@@ -9,6 +9,7 @@ import json
 import subprocess
 from PIL import Image
 import glob
+import os
 
 IMG_EXT = "png" #file extension of images that you want to resize
 IMG_RESIZED_DIMENSION = (100,100,) #width and height of the resized images
