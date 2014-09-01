@@ -5,4 +5,5 @@ urlpatterns =  patterns('interface.views',
     url(r'^code/(?P<id>.+)/$', 'interface_view', {}, name='interface_view'),
     url(r'^sha1/$', 'sha1_view', {}, name='sha1_view'),
     url(r'^json_test/$', 'json_test', {}, name='json_test'),
+    url(r'^image_converter/$', 'image_converter', {}, name='image_converter'),
 )

@@ -6,6 +6,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import requests
 import hashlib
 import json
+import subprocess
+from PIL import Image
+import glob
+
+IMG_EXT = "png" #file extension of images that you want to resize
+IMG_RESIZED_DIMENSION = (100,100,) #width and height of the resized images
 
 def interface_index(request):
     info = {}
@@ -100,5 +106,36 @@ def json_test(request):
 
     return res
 
+def image_converter(request):
+    ret = "Invalid Request!"
 
+    if request.method == "POST":
+        zip_file = request.FILES['zip_file']
+
+        filename, extension = os.path.splitext(zip_file.name)
+
+        destination = open("%s%s" % (settings.MEDIA_ROOT, zip_file.name), 'wb+')
+
+        for chunk in uploaded.chunks():
+            destination.write(chunk)
+
+        destination.close()
+
+        unzip = subprocess.Popen("unzip -d %s -o %s" % (filename, zip_file.name), shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        out, err = unzip.communicate()
+        unzip.stdout.close()
+
+        needToResizeImages = glob.glob("%s*.%s" % (settings.MEDIA_ROOT, IMG_EXT))
+
+        for needToResizeImage in needToResizeImages:
+            imgToResize = Image.open(needToResizeImage)
+            imgToResize = imgToResize.convert("RGBA")
+            imgToResize.thumbnail(IMG_RESIZED_DIMENSION, Image.ANTIALIAS)
+            resizedImage = Image.new('RGBA', IMG_RESIZED_DIMENSION, (255, 255, 255, 0,))
+            resizedImage.paste(imgToResize,((IMG_RESIZED_DIMENSION[0] - imgToResize.size[0]) / 2, (IMG_RESIZED_DIMENSION[1] - imgToResize.size[1]) / 2))
+            resizedImage.save("%s%s%s" % (settings.MEDIA_ROOT, "resized_", needToResizeImage))
+
+        ret = 'All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s">/media/%s</a>' % (filename, filename)
+
+    return HttpResponse(ret)
 
