@@ -107,7 +107,7 @@ def json_test(request):
     return res
 
 def image_converter(request):
-    ret = "Invalid Request!"
+    info = {}
 
     if request.method == "POST":
         zip_file = request.FILES['zip_file']
@@ -135,7 +135,7 @@ def image_converter(request):
             resizedImage.paste(imgToResize,((IMG_RESIZED_DIMENSION[0] - imgToResize.size[0]) / 2, (IMG_RESIZED_DIMENSION[1] - imgToResize.size[1]) / 2))
             resizedImage.save("%s%s%s" % (settings.MEDIA_ROOT, "resized_", needToResizeImage))
 
-        ret = 'All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s">/media/%s</a>' % (filename, filename)
+        return HttpResponse('All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s">/media/%s</a>' % (filename, filename))
 
-    return HttpResponse(ret)
+    return render_to_response('interface/image_converter.html',info,RequestContext(request))
 
