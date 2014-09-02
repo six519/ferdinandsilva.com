@@ -157,7 +157,7 @@ def image_converter(request):
             except:
                 pass
 
-        tar_file = subprocess.Popen("tar -cvf %s.tar %s" % (new_dir, new_dir), shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        tar_file = subprocess.Popen("tar -cvf %s.tar %s/." % (new_dir, new_dir), shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         out, err = tar_file.communicate()
         tar_file.stdout.close()
 
