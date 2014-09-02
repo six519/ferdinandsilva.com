@@ -146,10 +146,14 @@ def image_converter(request):
             imgToResize.thumbnail(img_res_tuple, Image.ANTIALIAS)
             resizedImage = Image.new('RGBA', img_res_tuple, (255, 255, 255, 0,))
             resizedImage.paste(imgToResize,((img_res_tuple[0] - imgToResize.size[0]) / 2, (img_res_tuple[1] - imgToResize.size[1]) / 2))
-            resizedImage.save("%s%s%s" % (settings.MEDIA_ROOT, "resized_", needToResizeImage))
+            
+            imgFname = os.path.basename(needToResizeImage)
+            imgFullPath = "%s%s/%s%s" % (settings.MEDIA_ROOT, filename, "resized_", imgFname)
+
+            resizedImage.save(imgFullPath)
 
             try:
-                os.chmod("%s%s%s" % (settings.MEDIA_ROOT, "resized_", needToResizeImage), 777)
+                os.chmod(imgFullPath, 777)
             except:
                 pass
 
