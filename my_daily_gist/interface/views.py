@@ -116,15 +116,23 @@ def image_converter(request):
         img_res_tuple = (res_width, res_height,)
 
         filename, extension = os.path.splitext(zip_file.name)
+        zip_full_path = "%s%s" % (settings.MEDIA_ROOT, zip_file.name)
 
-        destination = open("%s%s" % (settings.MEDIA_ROOT, zip_file.name), 'wb+')
+        destination = open(zip_full_path, 'wb+')
 
         for chunk in zip_file.chunks():
             destination.write(chunk)
 
         destination.close()
 
-        unzip = subprocess.Popen("unzip -d %s -o %s" % (filename, zip_file.name), shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        new_dir = "%s%s" % (settings.MEDIA_ROOT, filename)
+
+        try:
+            os.mkdir(new_dir)
+        except:
+            pass
+
+        unzip = subprocess.Popen("unzip -d %s -o %s" % (new_dir, zip_full_path), shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
         out, err = unzip.communicate()
         unzip.stdout.close()
 
