@@ -128,7 +128,8 @@ def image_converter(request):
         new_dir = "%s%s" % (settings.MEDIA_ROOT, filename)
 
         try:
-            os.mkdir(new_dir, 777)
+            os.mkdir(new_dir)
+            os.chmod(new_dir, 0777)
         except:
             pass
 
