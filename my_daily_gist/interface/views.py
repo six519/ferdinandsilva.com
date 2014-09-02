@@ -136,7 +136,7 @@ def image_converter(request):
         out, err = unzip.communicate()
         unzip.stdout.close()
 
-        needToResizeImages = glob.glob("%s*.%s" % (settings.MEDIA_ROOT, IMG_EXT))
+        needToResizeImages = glob.glob("%s%s/*.%s" % (settings.MEDIA_ROOT, filename, IMG_EXT))
 
 
         for needToResizeImage in needToResizeImages:
