@@ -153,7 +153,7 @@ def image_converter(request):
             resizedImage.save(imgFullPath)
 
             try:
-                os.chmod(imgFullPath, 777)
+                os.chmod(imgFullPath, 0777)
             except:
                 pass
 
