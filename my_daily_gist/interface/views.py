@@ -119,7 +119,7 @@ def image_converter(request):
 
         destination = open("%s%s" % (settings.MEDIA_ROOT, zip_file.name), 'wb+')
 
-        for chunk in uploaded.chunks():
+        for chunk in zip_file.chunks():
             destination.write(chunk)
 
         destination.close()
