@@ -128,7 +128,7 @@ def image_converter(request):
         new_dir = "%s%s" % (settings.MEDIA_ROOT, filename)
 
         try:
-            os.mkdir(new_dir)
+            os.mkdir(new_dir, 777)
         except:
             pass
 
@@ -146,6 +146,11 @@ def image_converter(request):
             resizedImage = Image.new('RGBA', img_res_tuple, (255, 255, 255, 0,))
             resizedImage.paste(imgToResize,((img_res_tuple[0] - imgToResize.size[0]) / 2, (img_res_tuple[1] - imgToResize.size[1]) / 2))
             resizedImage.save("%s%s%s" % (settings.MEDIA_ROOT, "resized_", needToResizeImage))
+
+            try:
+                os.chmod("%s%s%s" % (settings.MEDIA_ROOT, "resized_", needToResizeImage), 777)
+            except:
+                pass
 
         return HttpResponse('All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s">/media/%s</a>' % (filename, filename))
 
