@@ -157,7 +157,16 @@ def image_converter(request):
             except:
                 pass
 
-        return HttpResponse('All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s">/media/%s</a>' % (filename, filename))
+        tar_file = subprocess.Popen("tar -cvf %s.tar %s" % (new_dir, new_dir), shell=True, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+        out, err = tar_file.communicate()
+        tar_file.stdout.close()
+
+        try:
+            os.chmod("%s.tar" % new_dir, 0777)
+        except:
+            pass
+
+        return HttpResponse('All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s.tar">/media/%s.tar</a>' % (filename, filename))
 
     return render_to_response('interface/image_converter.html',info,RequestContext(request))
 
