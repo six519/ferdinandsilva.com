@@ -154,11 +154,8 @@ def image_converter(request):
 
             try:
                 os.chmod(imgFullPath, 0777)
-                os.chown(imgFullPath, 0, 0)
             except:
                 pass
-
-        os.chown(new_dir, 0, 0)
 
         return HttpResponse('All resized images filename are prefixed with "resized_" and can be viewed at <a href="/media/%s">/media/%s</a>' % (filename, filename))
 
