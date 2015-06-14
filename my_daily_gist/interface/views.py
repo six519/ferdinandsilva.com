@@ -21,8 +21,9 @@ def interface_index(request):
     try:
         gists = requests.get('https://api.github.com/users/six519/gists').json()
         insert_gists(gists)
-    except:
+    except Exception as e:
         gists = load_gists()
+        print "The error is: %s" % str(e)
 
     paginator = Paginator(gists, settings.MY_DAILY_GIST_PER_PAGE)
     page = request.GET.get('page','')
