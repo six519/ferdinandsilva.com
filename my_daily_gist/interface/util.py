@@ -7,7 +7,7 @@ def insert_gists(data_dict):
     mongo_db = mongo_client[settings.MONGODB_NAME]
     mongo_collection = mongo_db[settings.MONGODB_COLLECTION_NAME]
 
-    mongo_collection.update({}, data_dict, upsert=True)
+    mongo_collection.update_many({}, data_dict, upsert=True)
 
 def load_gists():
 
