@@ -20,7 +20,9 @@ def interface_index(request):
 
     try:
         gists = requests.get('https://api.github.com/users/six519/gists').json()
-        insert_gists(gists)
+
+        if gists:
+            insert_gists(gists)
     except Exception as e:
         gists = load_gists()
         print "The error is: %s" % str(e)
