@@ -8,7 +8,22 @@ def insert_gists(data_dict):
     mongo_collection = mongo_db[settings.MONGODB_COLLECTION_NAME]
     mongo_collection.delete_many({})
 
-    mongo_collection.insert_many([d_d for d_d in data_dict ])
+    dt = []
+
+    for d_d in data_dict:
+
+        tmp = {}
+        tmp.update(d_d["files"])
+
+        d_d["files"] = {}
+
+        for k,v in tmp.items():
+            d_d["files"][k.replace(".", "_")] = v
+
+        dt.append(d_d)
+
+    if len(dt) > 0:
+        mongo_collection.insert_many(dt)
 
 def load_gists():
 
