@@ -3,3 +3,4 @@ argparse==1.2.1
 django-bootstrap-pagination==0.1.11
 requests==2.0.0
 wsgiref==0.1.2
+pymongo==3.0.2
