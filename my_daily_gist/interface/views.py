@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse, redirect, render_to_response, render
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .util import *
 import requests
 import hashlib
 import json
@@ -19,8 +20,9 @@ def interface_index(request):
 
     try:
         gists = requests.get('https://api.github.com/users/six519/gists').json()
+        insert_gists(gists)
     except:
-        pass
+        gists = load_gists()
 
     paginator = Paginator(gists, settings.MY_DAILY_GIST_PER_PAGE)
     page = request.GET.get('page','')
@@ -31,6 +33,8 @@ def interface_index(request):
         gists = paginator.page(1)
     except EmptyPage:
         gists = paginator.page(paginator.num_pages)
+    except Exception as e:
+        print "The error is: %s" % str(e)
 
     info['gists'] = gists
     info['with_page'] = True
@@ -44,15 +48,16 @@ def interface_view(request, id):
 
     try:
         gists = requests.get('https://api.github.com/users/six519/gists').json()
-
-        for gist in gists:
-            if str(gist['id']) == str(id):
-                 gists = [gist]
-                 exists = True
-                 break
+        insert_gists(gists)
 
     except:
-        pass
+        gists = load_gists()
+
+    for gist in gists:
+        if str(gist['id']) == str(id):
+             gists = [gist]
+             exists = True
+             break
 
     if not exists:
         return redirect('interface_index')

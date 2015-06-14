@@ -172,6 +172,11 @@ LOGGING = {
 
 MY_DAILY_GIST_PER_PAGE = 4
 
+MONGODB_HOST = "127.0.0.1"
+MONGODB_PORT = 27017
+MONGODB_NAME = "ferdinandsilva"
+MONGODB_COLLECTION_NAME = "gists"
+
 try:
     from localsettings import *
 except:
