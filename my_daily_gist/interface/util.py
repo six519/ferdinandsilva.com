@@ -25,10 +25,15 @@ def insert_gists(data_dict):
     if len(dt) > 0:
         mongo_collection.insert_many(dt)
 
+    mongo_client.close()
+
 def load_gists():
 
+    ret = []
     mongo_client = pymongo.MongoClient(settings.MONGODB_HOST, settings.MONGODB_PORT)
     mongo_db = mongo_client[settings.MONGODB_NAME]
     mongo_collection = mongo_db[settings.MONGODB_COLLECTION_NAME]
+    ret = [gist for gist in mongo_collection.find({})]
+    mongo_client.close()
 
-    return [gist for gist in mongo_collection.find({})]
+    return ret
