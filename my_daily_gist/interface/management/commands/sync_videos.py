@@ -8,6 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print "Fetching youtube videos..."
         videos = feedparser.parse("https://www.youtube.com/feeds/videos.xml?channel_id=UCCdNET-0VecBzTLMB3m6PrA")
+        videos['entries'].reverse()
         cnt = 0
 
         for i, video in enumerate(videos["entries"]):

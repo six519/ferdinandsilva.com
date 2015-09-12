@@ -8,6 +8,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print "Fetching gists..."
         gists = requests.get('https://api.github.com/users/six519/gists').json()
+        gists.reverse()
 
         cnt = 0
         for i, gist in enumerate(gists):
