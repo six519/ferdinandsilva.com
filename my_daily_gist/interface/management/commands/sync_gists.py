@@ -12,7 +12,7 @@ class Command(BaseCommand):
         cnt = 0
         for i, gist in enumerate(gists):
             print "Reading gist # %s" % (i + 1)
-            gst = SocialPost.objects.filter(post_id=gist["id"])
+            gst = SocialPost.objects.filter(post_id=gist["id"], post_type=SocialPost.SOCIAL_POST_GIST)
 
             if gst.count() == 0:
                 cnt += 1
