@@ -17,7 +17,7 @@ IMG_EXT = "png" #file extension of images that you want to resize
 
 def interface_index(request):
     info = {}
-    posts = SocialPost.objects.filter()
+    posts = SocialPost.objects.filter().order_by("-id")
 
     paginator = Paginator(posts, settings.MY_DAILY_GIST_PER_PAGE)
     page = request.GET.get('page','')
