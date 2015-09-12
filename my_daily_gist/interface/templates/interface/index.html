@@ -5,7 +5,7 @@
       <div class="gistDiv">
 
         {% for post in posts %}
-        <h4><a href="{% url 'interface_view' post.post_id %}" class="gist_{{ post.post_id }}" title="https://gist.github.com/six519/{{ post.post_id }}">{{ post.description }}</a>
+        <h4><a href="{% url 'interface_view' post.post_id %}" class="gist_{{ post.post_id }}" title="{% if post.post_type == SOCIAL_POST_GIST %}https://gist.github.com/six519/{% else %}https://www.youtube.com/watch?v={% endif %}{{ post.post_id }}">{{ post.description }}</a>
         </h4>
 
         <div style="float:left;">
@@ -50,7 +50,11 @@
 
         <div style="clear:both;">&nbsp;</div>
 
+        {% if post.post_type == SOCIAL_POST_GIST %}
         <script src="https://gist.github.com/six519/{{ post.post_id }}.js"></script>
+        {% else %}
+        <iframe width="100%" height="360" src="https://www.youtube.com/embed/{{ post.post_id }}" frameborder="0" allowfullscreen></iframe>
+        {% endif %}
 
         {% if not forloop.last %}
         <hr>
