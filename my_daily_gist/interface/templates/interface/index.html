@@ -4,25 +4,20 @@
 {% block content %}
       <div class="gistDiv">
 
-        {% for gist in gists %}
-        <h4><a href="{% url 'interface_view' gist.id %}" class="gist_{{ gist.id }}" title="https://gist.github.com/six519/{{ gist.id }}">{{ gist.description }}</a>
+        {% for post in posts %}
+        <h4><a href="{% url 'interface_view' post.post_id %}" class="gist_{{ post.post_id }}" title="https://gist.github.com/six519/{{ post.post_id }}">{{ post.description }}</a>
         </h4>
 
         <div style="float:left;">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://ferdinandsilva.com{% url 'interface_view' gist.id %}">Tweet</a>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://ferdinandsilva.com{% url 'interface_view' post.post_id %}">Tweet</a>
         </div>
 
         <div style="float:left;width:30px;">
             &nbsp;
         </div>
-        <!--
-        <div class="fb-like" data-href="http://ferdinandsilva.com{% url 'interface_view' gist.id %}" data-send="true" data-width="450" data-show-faces="true"></div>
-
-        <div class="fb-recommendations-bar" data-site="http://ferdinandsilva.com{% url 'interface_view' gist.id %}" data-read-time="30" data-side="left" data-action="like"></div>
-        -->
 
         <div style="float:left;">
-        <div class="fb-like" data-href="http://ferdinandsilva.com{% url 'interface_view' gist.id %}" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="false" data-send="true"></div>
+        <div class="fb-like" data-href="http://ferdinandsilva.com{% url 'interface_view' post.post_id %}" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="false" data-send="true"></div>
         </div>
 
         <div style="float:left;width:30px;">
@@ -33,7 +28,7 @@
         <script src="//platform.linkedin.com/in.js" type="text/javascript">
           lang: en_US
         </script>
-        <script type="IN/Share" data-url="http://ferdinandsilva.com{% url 'interface_view' gist.id %}" data-counter="right"></script>
+        <script type="IN/Share" data-url="http://ferdinandsilva.com{% url 'interface_view' post.post_id %}" data-counter="right"></script>
         </div>
         
 
@@ -42,7 +37,7 @@
         </div>        
         
         <div style="float:left">
-        <div class="g-plusone" data-href="http://ferdinandsilva.com{% url 'interface_view' gist.id %}"></div>
+        <div class="g-plusone" data-href="http://ferdinandsilva.com{% url 'interface_view' post.post_id %}"></div>
         <script type="text/javascript">
           (function() {
             var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -55,7 +50,7 @@
 
         <div style="clear:both;">&nbsp;</div>
 
-        <script src="https://gist.github.com/six519/{{ gist.id }}.js"></script>
+        <script src="https://gist.github.com/six519/{{ post.post_id }}.js"></script>
         {% if not forloop.last %}
         <hr>
         {% endif %}
@@ -63,7 +58,7 @@
         {% endfor %}
 
         {% if with_page %}
-        {% bootstrap_paginate gists %}
+        {% bootstrap_paginate posts %}
         {% else %}
         <div class="pagination  pagination-centered ">    
             <ul>    
@@ -80,8 +75,8 @@
 <script>
 
     $(function(e){
-        {% for gist in gists %}
-        $('.gist_{{ gist.id }}').tooltip();
+        {% for post in posts %}
+        $('.gist_{{ post.post_id }}').tooltip();
         {% endfor %}
     });
 

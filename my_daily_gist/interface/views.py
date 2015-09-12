@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse, redirect, render_to_response, render
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from interface.models import *
 from .util import *
 import requests
 import hashlib
@@ -16,57 +17,34 @@ IMG_EXT = "png" #file extension of images that you want to resize
 
 def interface_index(request):
     info = {}
-    gists = []
+    posts = SocialPost.objects.filter()
 
-    try:
-        gists = requests.get('https://api.github.com/users/six519/gists').json()
-
-        if gists:
-            insert_gists(gists)
-    except Exception as e:
-        gists = load_gists()
-        print "The error is: %s" % str(e)
-
-    paginator = Paginator(gists, settings.MY_DAILY_GIST_PER_PAGE)
+    paginator = Paginator(posts, settings.MY_DAILY_GIST_PER_PAGE)
     page = request.GET.get('page','')
 
     try:
-        gists = paginator.page(page)
+        posts = paginator.page(page)
     except PageNotAnInteger:
-        gists = paginator.page(1)
+        posts = paginator.page(1)
     except EmptyPage:
-        gists = paginator.page(paginator.num_pages)
+        posts = paginator.page(paginator.num_pages)
     except Exception as e:
         print "The error is: %s" % str(e)
 
-    info['gists'] = gists
+    info['posts'] = posts
     info['with_page'] = True
 
     return render_to_response('interface/index.html',info,RequestContext(request))
 
 def interface_view(request, id):
     info = {}
-    gists = []
-    exists = False
+    posts = SocialPost.objects.filter(post_id=str(id))
 
-    try:
-        gists = requests.get('https://api.github.com/users/six519/gists').json()
-        insert_gists(gists)
-
-    except:
-        gists = load_gists()
-
-    for gist in gists:
-        if str(gist['id']) == str(id):
-             gists = [gist]
-             exists = True
-             break
-
-    if not exists:
+    if posts.count() == 0:
         return redirect('interface_index')
 
-    info['gists'] = gists
-    info['site_title'] = gists[0]['description']
+    info['posts'] = posts
+    info['site_title'] = posts[0].description
 
     return render_to_response('interface/index.html',info,RequestContext(request))
 
