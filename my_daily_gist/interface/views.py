@@ -60,6 +60,10 @@ def sha1_view(request):
 
     return HttpResponse(ret)
 
+def acme_challenge(request):
+
+    return HttpResponse("ilqDMoTOdWLoELgqOsd19jnre5PqySJ8ntYkEtkJ6DU.G_WLpstEOwEPamU4OiuTxZnVfP7BksE7aC4AuMB3lBg")
+
 def json_test(request):
 
     ret = [
