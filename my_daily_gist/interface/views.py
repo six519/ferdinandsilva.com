@@ -62,7 +62,7 @@ def sha1_view(request):
 
 def acme_challenge(request):
 
-    return HttpResponse("ilqDMoTOdWLoELgqOsd19jnre5PqySJ8ntYkEtkJ6DU.G_WLpstEOwEPamU4OiuTxZnVfP7BksE7aC4AuMB3lBg")
+    return HttpResponse("9CEDQueImAXHWFcGwtC3WCkCD1t5oIW33PHMESzOtvU.G_WLpstEOwEPamU4OiuTxZnVfP7BksE7aC4AuMB3lBg")
 
 def json_test(request):
 
