@@ -62,7 +62,7 @@
         {% endfor %}
 
         {% if with_page %}
-        {% bootstrap_paginate posts %}
+        {% bootstrap_paginate posts range=10 %}
         {% else %}
         <div class="pagination  pagination-centered ">    
             <ul>    
