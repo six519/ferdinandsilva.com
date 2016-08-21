@@ -3,6 +3,7 @@ from django.shortcuts import HttpResponse, redirect, render_to_response, render
 from django.utils.translation import ugettext_lazy as _
 from django.template import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from pyfiglet import figlet_format
 from interface.models import *
 from .util import *
 import requests
@@ -156,3 +157,14 @@ def image_converter(request):
 
     return render_to_response('interface/image_converter.html',info,RequestContext(request))
 
+def figlet(request):
+    text = request.GET.get('text', 'Hello World')
+    font = request.GET.get('font', 'basic')
+    response = ""
+
+    try:
+        response = figlet_format(text, font=font)
+    except:
+        pass
+
+    return HttpResponse(response, content_type="text/plain")
