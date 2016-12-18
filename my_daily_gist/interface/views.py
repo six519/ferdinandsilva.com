@@ -33,9 +33,17 @@ def interface_index(request):
         print "The error is: %s" % str(e)
 
     info['posts'] = posts
+    info['is_home'] = True
     info['with_page'] = True
 
     return render_to_response('interface/index.html',info,RequestContext(request))
+
+def interface_profiles(request):
+    info = {}
+
+    info["is_profile"] = True
+
+    return render_to_response('interface/profiles.html',info,RequestContext(request))
 
 def interface_view(request, id):
     info = {}

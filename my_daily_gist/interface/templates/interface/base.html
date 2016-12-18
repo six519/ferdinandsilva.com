@@ -137,8 +137,13 @@
     <div class="container-narrow">
 
       <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          {% if is_home %}<li class="active">{% else %}<li>{% endif %}<a href="/">Codes</a></li>
+          {% if is_profile %}<li class="active">{% else %}<li>{% endif %}<a href="/profiles">Online Profiles</a></li>
+        </ul>
         <h3 class="muted">My Daily Gist | Ferdinand Silva</h3>
 
+        <!--
       <h1 class="gistH1">
         <a href="https://github.com/six519">
         <img class="gistImg" src="https://avatars0.githubusercontent.com/u/483547?v=3&s=140" width="42" height="42" alt=""></a>
@@ -147,7 +152,7 @@
       </h1>
 
       <a href="https://www.google.com/+FerdinandSilva"><img src="/static/interface/bootstrap/img/icons/gplus2.png" alt="" /></a> <a href="http://www.youtube.com/user/six519"><img src="/static/interface/bootstrap/img/icons/youtube.png" alt="" /></a> <a href="https://www.facebook.com/ferdinandsilva"><img src="/static/interface/bootstrap/img/icons/facebook.png" alt="" /></a> <a href="https://twitter.com/ferdinandsilva"><img src="/static/interface/bootstrap/img/icons/twitter.png" alt="" /></a> <a href="mailto:ferdinandsilva@ferdinandsilva.com"><img src="/static/interface/bootstrap/img/icons/email.png" alt="" /></a> <a href="skype:six519?chat"><img src="/static/interface/bootstrap/img/icons/skype.png" alt="" /></a> <a href="mailto:six519@yahoo.com"><img src="/static/interface/bootstrap/img/icons/yahoo.png" alt="" /></a>
-
+        -->
       </div>
 
       <hr>
