@@ -53,6 +53,7 @@ def interface_view(request, id):
         return redirect('interface_index')
 
     info['posts'] = posts
+    info['is_home'] = True
     info['site_title'] = posts[0].description
 
     return render_to_response('interface/index.html',info,RequestContext(request))
