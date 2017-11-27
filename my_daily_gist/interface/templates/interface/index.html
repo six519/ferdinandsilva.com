@@ -5,7 +5,7 @@
       <div class="gistDiv">
 
         {% for post in posts %}
-        <h4><a href="{% url 'interface_view' post.post_id %}" class="gist_{{ post.post_id }}" title="{% if post.post_type == SOCIAL_POST_GIST %}https://gist.github.com/six519/{% else %}https://www.youtube.com/watch?v={% endif %}{{ post.post_id }}">{{ post.description }}</a>
+        <h4><a href="{% url 'interface_view' post.post_id %}" class="gist_{{ post.post_id }}" title="{% if post.post_type == SOCIAL_POST_GIST %}https://gist.github.com/six519/{{ post.post_id }}{% elif post.post_type == SOCIAL_POST_YOUTUBE %}https://www.youtube.com/watch?v={{ post.post_id }}{% else %}{{ post.image_url }}{% endif %}">{{ post.description }}</a>
         </h4>
 
         <div style="float:left;">
@@ -49,9 +49,15 @@
 
         {% if post.post_type == SOCIAL_POST_GIST %}
         <script src="https://gist.github.com/six519/{{ post.post_id }}.js"></script>
-        {% else %}
+        {% elif post.post_type == SOCIAL_POST_YOUTUBE %}
         <div class="text-center">
         <iframe width="640" height="360" src="https://www.youtube.com/embed/{{ post.post_id }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        {% else %}
+        <div class="text-center">
+            <a href="{{ post.image_url }}" target="_blank">
+                <img src="{{ post.image_url }}" style="min-width: 640px; min-height:360px;" />
+            </a>
         </div>
         {% endif %}
 
