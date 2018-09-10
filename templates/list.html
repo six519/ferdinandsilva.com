@@ -1,0 +1,61 @@
+<h4><a href="/code/?post_id={{ .post_id }}" class="gist_{{ .post_id }}" title="{{if .post_gist}}https://gist.github.com/six519/{{ .post_id }}{{end}}{{if .post_youtube}}https://www.youtube.com/watch?v={{ .post_id }}{{end}}{{if .post_image}}{{ .image_url }}{{end}}">{{ .description }}</a>
+</h4>
+
+<div style="float:left;">
+<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://ferdinandsilva.com/code/{{ .post_id }}/">Tweet</a>
+</div>
+
+<div style="float:left;width:30px;">
+    &nbsp;
+</div>
+
+<div style="float:left;">
+<div class="fb-like" data-href="http://ferdinandsilva.com/code/{{ .post_id }}/" data-colorscheme="light" data-layout="button_count" data-action="like" data-show-faces="false" data-send="true"></div>
+</div>
+
+<div style="float:left;width:30px;">
+    &nbsp;
+</div>
+
+<div style="float:left;">
+<script type="IN/Share" data-url="http://ferdinandsilva.com/code/{{ .post_id }}/" data-counter="right"></script>
+</div>
+
+
+<div style="float:left;width:30px;">
+    &nbsp;
+</div>        
+
+<div style="float:left">
+<div class="g-plusone" data-href="http://ferdinandsilva.com/code/{{ .post_id }}/"></div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>
+</div>        
+
+
+<div style="clear:both;">&nbsp;</div>
+
+{{if .post_gist}}
+<script src="https://gist.github.com/six519/{{ .post_id }}.js"></script>
+{{end}}
+
+{{if .post_youtube}}
+<div class="text-center">
+<iframe width="640" height="360" src="https://www.youtube.com/embed/{{ .post_id }}" frameborder="0" allowfullscreen></iframe>
+</div>
+{{end}}
+
+{{if .post_image }}
+<div class="text-center">
+    <a href="{{ .image_url }}" target="_blank">
+        <img src="{{ .image_url }}" style="min-width: 640px; min-height:360px;" />
+    </a>
+</div>
+{{end}}
+
+<hr>
