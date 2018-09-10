@@ -3,6 +3,7 @@ MYSQL_USER = "root"
 MYSQL_PASSWORD = ""
 MYSQL_HOST = ""
 MYSQL_DATABASE = "my_daily_gist"
+TEMPLATE_PATH = "/var/www/ferdinandsilva2.com/templates/"
 
 ITEM_PER_PAGE = 5
 
@@ -44,7 +45,7 @@ fd index()
     mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
 
     ret = mysql_q("SELECT * FROM social_posts ORDER BY id DESC LIMIT " + tos(offset) + "," + tos(ITEM_PER_PAGE))
-    http_lt("templates/header.html", {"is_home":"yes"})
+    http_lt(TEMPLATE_PATH + "header.html", {"is_home":"yes"})
     footer_var = {"show_page": "", "show_previous": "", "previous_page": "", "show_next": "", "next_page": ""}
     if (ret)
         descriptions = mysql_fa("description")
@@ -73,7 +74,7 @@ fd index()
                 var['post_id'] = post_ids[n]
                 var['image_url'] = image_urls[n]
 
-                http_lt("templates/list.html", var)
+                http_lt(TEMPLATE_PATH + "list.html", var)
                 n = n + 1
             lf
             http_p('</div>')
@@ -101,18 +102,18 @@ fd index()
         footer_var["next_page"] = tos(page + 1)
     fi
 
-    http_lt("templates/footer.html", footer_var)
+    http_lt(TEMPLATE_PATH + "footer.html", footer_var)
     mysql_cr() #cleanup
 df
 
 fd profiles()
-    http_lt("templates/header.html", {"is_profile":"yes"})
-    http_lt("templates/profiles.html", {})
-    http_lt("templates/footer.html", {})
+    http_lt(TEMPLATE_PATH + "header.html", {"is_profile":"yes"})
+    http_lt(TEMPLATE_PATH + "profiles.html", {})
+    http_lt(TEMPLATE_PATH + "footer.html", {})
 df
 
 fd code()
-    http_lt("templates/header.html", {"is_home":"yes", "show_back": "yes"})
+    http_lt(TEMPLATE_PATH + "header.html", {"is_home":"yes", "show_back": "yes"})
     get_id = http_gq("post_id")
 
     if (len(get_id) > 0)
@@ -145,7 +146,7 @@ fd code()
                     var['post_id'] = post_ids[n]
                     var['image_url'] = image_urls[n]
 
-                    http_lt("templates/list.html", var)
+                    http_lt(TEMPLATE_PATH + "list.html", var)
                     n = n + 1
                 lf
                 http_p('</div>')
@@ -165,7 +166,7 @@ fd code()
         mysql_cr()
     fi
 
-    http_lt("templates/footer.html", {"show_back": "yes"})
+    http_lt(TEMPLATE_PATH + "footer.html", {"show_back": "yes"})
 df
 
 http_au("/", "index")
