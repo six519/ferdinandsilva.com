@@ -172,7 +172,7 @@ df
 http_au("/", "index")
 http_au("profiles", "profiles")
 http_au("code/", "code")
-http_su("/static/", "./static")
+http_su("/static/", "/var/www/ferdinandsilva2.com/static")
 
 p("Running web server at: " + PORT) #
 http_run(":" + PORT) #start web server
