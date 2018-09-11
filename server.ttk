@@ -113,7 +113,6 @@ fd profiles()
 df
 
 fd code()
-    http_lt(TEMPLATE_PATH + "header.html", {"is_home":"yes", "show_back": "yes"})
     get_id = http_gq("post_id")
 
     if (len(get_id) > 0)
@@ -127,6 +126,7 @@ fd code()
             image_urls = mysql_fa("image_url")
 
             if (len(descriptions) > 0)
+                http_lt(TEMPLATE_PATH + "header.html", {"is_home":"yes", "show_back": "yes", "site_title": descriptions[0]})
                 http_p('<div class="gistDiv">')
                 n = 0
                 fl(1, len(descriptions))
@@ -158,10 +158,10 @@ fd code()
                 lf
                 http_p('});</script>')
             el
-                #nothing to do for now
+                http_lt(TEMPLATE_PATH + "header.html", {"is_home":"yes", "show_back": "yes"})
             fi
         el
-            #nothing to do for now
+            http_lt(TEMPLATE_PATH + "header.html", {"is_home":"yes", "show_back": "yes"})
         fi
         mysql_cr()
     fi
