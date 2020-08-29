@@ -26,9 +26,9 @@ fd index()
     row_count = 0
     page_count = 0
 
-    mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
+    connection = mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
     #get total count
-    ret = mysql_q("SELECT * FROM social_posts ORDER BY id DESC")
+    ret = mysql_q(connection, "SELECT * FROM social_posts ORDER BY id DESC")
 
 
     if (ret)
@@ -39,7 +39,7 @@ fd index()
         fi
     fi
 
-    ret = mysql_q("SELECT * FROM social_posts ORDER BY id DESC LIMIT " + tos(offset) + "," + tos(ITEM_PER_PAGE))
+    ret = mysql_q(connection, "SELECT * FROM social_posts ORDER BY id DESC LIMIT " + tos(offset) + "," + tos(ITEM_PER_PAGE))
     http_lt(APP_PATH + "templates/header.html", {"is_home":"yes"})
     footer_var = {"show_page": "", "show_previous": "", "previous_page": "", "show_next": "", "next_page": ""}
     if (ret)
@@ -111,8 +111,8 @@ fd code()
     get_id = http_gq("post_id")
 
     if (len(get_id) > 0)
-        mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
-        ret = mysql_q("SELECT * FROM social_posts WHERE post_id='" + get_id[0] + "'")
+        connection = mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
+        ret = mysql_q(connection, "SELECT * FROM social_posts WHERE post_id='" + get_id[0] + "'")
 
         if (ret)
             descriptions = mysql_fa("description")
