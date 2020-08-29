@@ -52,7 +52,7 @@ fd index()
             footer_var["show_page"] = "yes"
             http_p('<div class="gistDiv">')
             n = 0
-            fl(1, len(descriptions))
+            fl(0, len(descriptions))
 
                 var = {"post_gist": "", "post_youtube": "", "post_image": "", "description": "", "post_id": "", "post_type": "", "image_url": ""}
 
@@ -75,7 +75,7 @@ fd index()
             http_p('</div>')
             http_p('<script>$(function(e){')
             n = 0
-            fl(1, len(descriptions))
+            fl(0, len(descriptions))
                 http_p("$('.gist_" + post_ids[n] + "').tooltip();")
                 n = n + 1
             lf
@@ -124,7 +124,7 @@ fd code()
                 http_lt(APP_PATH + "templates/header.html", {"is_home":"yes", "show_back": "yes", "site_title": descriptions[0]})
                 http_p('<div class="gistDiv">')
                 n = 0
-                fl(1, len(descriptions))
+                fl(0, len(descriptions))
 
                     var = {"post_gist": "", "post_youtube": "", "post_image": "", "description": "", "post_id": "", "post_type": "", "image_url": ""}
 
@@ -147,7 +147,7 @@ fd code()
                 http_p('</div>')
                 http_p('<script>$(function(e){')
                 n = 0
-                fl(1, len(descriptions))
+                fl(0, len(descriptions))
                     http_p("$('.gist_" + post_ids[n] + "').tooltip();")
                     n = n + 1
                 lf
