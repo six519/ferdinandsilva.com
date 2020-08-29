@@ -32,7 +32,7 @@ fd index()
 
 
     if (ret)
-        ids = mysql_fa("id")
+        ids = mysql_fa(connection, "id")
         if (len(ids) > 0)
             row_count = len(ids)
             page_count = row_count / ITEM_PER_PAGE
@@ -43,10 +43,10 @@ fd index()
     http_lt(APP_PATH + "templates/header.html", {"is_home":"yes"})
     footer_var = {"show_page": "", "show_previous": "", "previous_page": "", "show_next": "", "next_page": ""}
     if (ret)
-        descriptions = mysql_fa("description")
-        post_ids = mysql_fa("post_id")
-        post_types = mysql_fa("post_type")
-        image_urls = mysql_fa("image_url")
+        descriptions = mysql_fa(connection, "description")
+        post_ids = mysql_fa(connection, "post_id")
+        post_types = mysql_fa(connection, "post_type")
+        image_urls = mysql_fa(connection, "image_url")
 
         if (len(descriptions) > 0)
             footer_var["show_page"] = "yes"
@@ -98,7 +98,7 @@ fd index()
     fi
 
     http_lt(APP_PATH + "templates/footer.html", footer_var)
-    mysql_cr() #cleanup
+    mysql_cr(connection) #cleanup
 df
 
 fd profiles()
@@ -115,10 +115,10 @@ fd code()
         ret = mysql_q(connection, "SELECT * FROM social_posts WHERE post_id='" + get_id[0] + "'")
 
         if (ret)
-            descriptions = mysql_fa("description")
-            post_ids = mysql_fa("post_id")
-            post_types = mysql_fa("post_type")
-            image_urls = mysql_fa("image_url")
+            descriptions = mysql_fa(connection, "description")
+            post_ids = mysql_fa(connection, "post_id")
+            post_types = mysql_fa(connection, "post_type")
+            image_urls = mysql_fa(connection, "image_url")
 
             if (len(descriptions) > 0)
                 http_lt(APP_PATH + "templates/header.html", {"is_home":"yes", "show_back": "yes", "site_title": descriptions[0]})
@@ -158,7 +158,7 @@ fd code()
         el
             http_lt(APP_PATH + "templates/header.html", {"is_home":"yes", "show_back": "yes"})
         fi
-        mysql_cr()
+        mysql_cr(connection)
     fi
 
     http_lt(APP_PATH + "templates/footer.html", {"show_back": "yes"})
