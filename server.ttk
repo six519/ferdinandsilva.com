@@ -107,6 +107,12 @@ fd profiles()
     http_lt(APP_PATH + "templates/footer.html", {})
 df
 
+fd pppusoy()
+    http_lt(APP_PATH + "templates/header.html", {"is_profile":"yes"})
+    http_lt(APP_PATH + "templates/pppusoy.html", {})
+    http_lt(APP_PATH + "templates/footer.html", {})
+df
+
 fd code()
     get_id = http_gq("post_id")
 
@@ -166,6 +172,7 @@ df
 
 http_au("/", "index")
 http_au("profiles", "profiles")
+http_au("pppusoy", "pppusoy")
 http_au("code/", "code")
 http_su("/static/", APP_PATH + "static")
 http_su("/.well-known/", APP_PATH + ".well-known")
