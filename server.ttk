@@ -170,9 +170,24 @@ fd code()
     http_lt(APP_PATH + "templates/footer.html", {"show_back": "yes"})
 df
 
+fd figlet()
+    text = http_gq("text")
+    font = http_gq("font")
+    http_h("Content-Type", "text/plain")
+    
+    output = exe("figlet -f " + font[0] + " " + text[0])
+
+    if (output['success'])
+        http_p(output['output'])
+    el
+        http_p("Unable to generate text...")
+    fi
+df
+
 http_au("/", "index")
 http_au("profiles", "profiles")
 http_au("pppusoy", "pppusoy")
+http_au("figlet/", "figlet")
 http_au("code/", "code")
 http_su("/static/", APP_PATH + "static")
 http_su("/.well-known/", APP_PATH + ".well-known")
