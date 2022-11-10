@@ -1,0 +1,9 @@
+PORT = "8080"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = ""
+MYSQL_HOST = "127.0.0.1:3306"
+MYSQL_DATABASE = "my_daily_gist"
+APP_PATH = "/var/www/ferdinandsilva2.com/"
+#APP_PATH = ""
+
+ITEM_PER_PAGE = 5

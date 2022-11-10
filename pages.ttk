@@ -1,0 +1,181 @@
+fd index()
+
+    page = http_gq("page")
+
+    if(len(page) == 0)
+        page = 1
+    el
+        page = toi(page[0])
+
+        if (page == 0)
+            page = 1
+        fi
+    fi
+
+    offset = (page - 1) * ITEM_PER_PAGE
+    row_count = 0
+    page_count = 0
+
+    connection = mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
+    #get total count
+    ret = mysql_q(connection, "SELECT * FROM social_posts ORDER BY id DESC")
+
+
+    if (ret)
+        ids = mysql_fa(connection, "id")
+        if (len(ids) > 0)
+            row_count = len(ids)
+            page_count = row_count / ITEM_PER_PAGE
+        fi
+    fi
+
+    ret = mysql_q(connection, "SELECT * FROM social_posts ORDER BY id DESC LIMIT " + tos(offset) + "," + tos(ITEM_PER_PAGE))
+    http_lt(APP_PATH + "templates/header.html", {"is_home":"yes"})
+    footer_var = {"show_page": "", "show_previous": "", "previous_page": "", "show_next": "", "next_page": ""}
+    if (ret)
+        descriptions = mysql_fa(connection, "description")
+        post_ids = mysql_fa(connection, "post_id")
+        post_types = mysql_fa(connection, "post_type")
+        image_urls = mysql_fa(connection, "image_url")
+
+        if (len(descriptions) > 0)
+            footer_var["show_page"] = "yes"
+            http_p('<div class="gistDiv">')
+            n = 0
+            fl(0, len(descriptions))
+
+                var = {"post_gist": "", "post_youtube": "", "post_image": "", "description": "", "post_id": "", "post_type": "", "image_url": ""}
+
+                if(post_types[n] == "0")
+                    var['post_gist'] = "yes"
+                ef (post_types[n] == "1")
+                    var['post_youtube'] = "yes"
+                el
+                    var['post_image'] = "yes"
+                fi
+
+                var['post_type'] = post_types[n]
+                var['description'] = descriptions[n]
+                var['post_id'] = post_ids[n]
+                var['image_url'] = image_urls[n]
+
+                http_lt(APP_PATH + "templates/list.html", var)
+                n = n + 1
+            lf
+            http_p('</div>')
+            http_p('<script>$(function(e){')
+            n = 0
+            fl(0, len(descriptions))
+                http_p("$('.gist_" + post_ids[n] + "').tooltip();")
+                n = n + 1
+            lf
+            http_p('});</script>')
+        el
+            #nothing to do for now
+        fi
+    el
+        #nothing to do for now
+    fi
+
+    if(page <> 1)
+        footer_var["show_previous"] = "yes"
+        footer_var["previous_page"] = tos(page - 1)
+    fi
+
+    if(page <= page_count)
+        footer_var["show_next"] = "yes"
+        footer_var["next_page"] = tos(page + 1)
+    fi
+
+    http_lt(APP_PATH + "templates/footer.html", footer_var)
+    mysql_cr(connection) #cleanup
+df
+
+fd profiles()
+    http_lt(APP_PATH + "templates/header.html", {"is_profile":"yes"})
+    http_lt(APP_PATH + "templates/profiles.html", {})
+    http_lt(APP_PATH + "templates/footer.html", {})
+df
+
+fd pppusoy()
+    http_lt(APP_PATH + "templates/header.html", {})
+    http_lt(APP_PATH + "templates/pppusoy.html", {})
+    http_lt(APP_PATH + "templates/footer.html", {})
+df
+
+fd code()
+    get_id = http_gq("post_id")
+
+    if (len(get_id) > 0)
+        connection = mysql_set(MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DATABASE) #init database
+        ret = mysql_q(connection, "SELECT * FROM social_posts WHERE post_id='" + get_id[0] + "'")
+
+        if (ret)
+            descriptions = mysql_fa(connection, "description")
+            post_ids = mysql_fa(connection, "post_id")
+            post_types = mysql_fa(connection, "post_type")
+            image_urls = mysql_fa(connection, "image_url")
+
+            if (len(descriptions) > 0)
+                http_lt(APP_PATH + "templates/header.html", {"is_home":"yes", "show_back": "yes", "site_title": descriptions[0]})
+                http_p('<div class="gistDiv">')
+                n = 0
+                fl(0, len(descriptions))
+
+                    var = {"post_gist": "", "post_youtube": "", "post_image": "", "description": "", "post_id": "", "post_type": "", "image_url": ""}
+
+                    if(post_types[n] == "0")
+                        var['post_gist'] = "yes"
+                    ef (post_types[n] == "1")
+                        var['post_youtube'] = "yes"
+                    el
+                        var['post_image'] = "yes"
+                    fi
+
+                    var['post_type'] = post_types[n]
+                    var['description'] = descriptions[n]
+                    var['post_id'] = post_ids[n]
+                    var['image_url'] = image_urls[n]
+
+                    http_lt(APP_PATH + "templates/list.html", var)
+                    n = n + 1
+                lf
+                http_p('</div>')
+                http_p('<script>$(function(e){')
+                n = 0
+                fl(0, len(descriptions))
+                    http_p("$('.gist_" + post_ids[n] + "').tooltip();")
+                    n = n + 1
+                lf
+                http_p('});</script>')
+            el
+                http_lt(APP_PATH + "templates/header.html", {"is_home":"yes", "show_back": "yes"})
+            fi
+        el
+            http_lt(APP_PATH + "templates/header.html", {"is_home":"yes", "show_back": "yes"})
+        fi
+        mysql_cr(connection)
+    fi
+
+    http_lt(APP_PATH + "templates/footer.html", {"show_back": "yes"})
+df
+
+fd figlet()
+    text = http_gq("text")
+    font = http_gq("font")
+    http_h("Content-Type", "text/plain")
+    
+    output = exe("figlet -f " + font[0] + " " + text[0])
+
+    if (output['success'])
+        http_p(output['output'])
+    el
+        http_p("Unable to generate text...")
+    fi
+df
+
+fd umario()
+    http_lt(APP_PATH + "templates/header.html", {})
+    http_lt(APP_PATH + "templates/umario.html", {})
+    http_lt(APP_PATH + "templates/footer.html", {})
+df
