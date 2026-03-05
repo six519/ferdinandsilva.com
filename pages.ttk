@@ -109,6 +109,12 @@ fd dogs()
     http_lt(APP_PATH + "templates/footer.html", {})
 df
 
+fd malaya()
+    http_lt(APP_PATH + "templates/header.html", {})
+    http_lt(APP_PATH + "templates/malaya.html", {})
+    http_lt(APP_PATH + "templates/footer.html", {})
+df
+
 fd code()
     get_id = http_gq("post_id")
 
